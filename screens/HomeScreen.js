@@ -25,15 +25,15 @@ export default class HomeScreen extends React.Component {
             <Image
               source={
                 __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
+                  ? require('../assets/images/EveriDeliver.jpg')
+                  : require('../assets/images/EveriDeliver.jpg')
               }
               style={styles.welcomeImage}
             />
           </View>
 
           <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
+            {/*{this._maybeRenderDevelopmentModeWarning()}*/}
 
             <Text style={styles.getStartedText}>Get started by opening</Text>
 
@@ -54,11 +54,21 @@ export default class HomeScreen extends React.Component {
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
+          <Text style={styles.tabBarInfoText}>Powered By</Text>
 
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
+          <Image
+            source={
+              __DEV__
+                ? require('../assets/images/EveriToken.png')
+                : require('../assets/images/EveriToken.png')
+            }
+            style={styles.poweredImage}
+          />
+
+          <Image
+            source={require('../assets/images/blockweise.png')}
+            style={styles.poweredImage}
+          />
         </View>
       </View>
     );
@@ -119,11 +129,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   welcomeImage: {
-    width: 100,
-    height: 80,
+    width: 150,
+    height: 150,
     resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
+
+  },
+  poweredImage: {
+    width: 80,
+    height: 40,
+    resizeMode: 'contain',
+    marginLeft: 20,
   },
   getStartedContainer: {
     alignItems: 'center',
@@ -162,9 +177,12 @@ const styles = StyleSheet.create({
         elevation: 20,
       },
     }),
+    flexWrap: 'wrap',
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
+    paddingVertical: 3,
   },
   tabBarInfoText: {
     fontSize: 17,
