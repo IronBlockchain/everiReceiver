@@ -9,8 +9,7 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-import styles from '../styles/HomeScreenStyle'
-
+import {HomeScreenStyles as styles} from "../styles/HomeScreenStyle";
 import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {

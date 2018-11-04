@@ -2,7 +2,7 @@ import {Platform, StyleSheet} from "react-native";
 import _ from 'lodash';
 import {inlineImage} from "./utilStyle";
 
-export default StyleSheet.create({
+export const HomeScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
