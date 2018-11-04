@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import HistoryScreen from '../screens/HistoryScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import TokenScreen from '../screens/TokenScreen'
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -27,6 +28,7 @@ HomeStack.navigationOptions = {
 
 const HistoryStack = createStackNavigator({
   History: HistoryScreen,
+  Token: TokenScreen,
 });
 
 HistoryStack.navigationOptions = {

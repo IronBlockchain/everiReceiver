@@ -20,7 +20,9 @@ export default class HistoryScreen extends React.Component {
             {key: 'Julie'},
           ]}
           renderItem={({item}) =>
-            <TouchableOpacity style={styles.item}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={()=>this.props.navigation.navigate('Token', { name: item.key })}>
               <Text> {item.key} </Text>
             </TouchableOpacity>
           }
