@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Button,
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
@@ -13,9 +14,29 @@ import {HomeScreenStyles as styles} from "../styles/HomeScreenStyle";
 import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
+  constructor (props) {
+    super();
+    this.state = {message: 'no message'};
+  }
+
   static navigationOptions = {
     header: null,
   };
+
+  componentDidMount(){
+    const ws = new WebSocket('ws://192.168.178.22:1337', (result, code)=> {
+      console.log(result, code)
+    })
+    ws.onopen = () => {
+      // connection opened
+      console.log('is opened')
+      ws.send('something'); // send a message
+    };
+    ws.onmessage = (message) => {
+      this.setState({message: message.data.toString()})
+      console.log('receive message4')
+    }
+  }
 
   render() {
     return (
@@ -38,14 +59,13 @@ export default class HomeScreen extends React.Component {
             </View>
 
             <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
+              {this.state.message}
             </Text>
           </View>
 
           <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
+            <Button onPress={this._handleHelpPress} style={styles.helpLink} title='Reload'>
+            </Button>
           </View>
         </ScrollView>
 
@@ -98,8 +118,9 @@ export default class HomeScreen extends React.Component {
   };
 
   _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
+    Expo.Util.reload()
+    // WebBrowser.openBrowserAsync(
+    //   'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
+    // );
   };
 }
