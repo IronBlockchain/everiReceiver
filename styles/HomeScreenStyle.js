@@ -91,8 +91,4 @@ export const HomeScreenStyles = StyleSheet.create({
   helpLink: {
     paddingVertical: 15,
   },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
 });
