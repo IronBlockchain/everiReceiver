@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import {HomeScreenStyles as styles} from "../styles/HomeScreenStyle";
-import { MonoText } from '../components/StyledText';
+import TokenProgress from '../components/TokenProgress';
 
 export default class HomeScreen extends React.Component {
   constructor (props) {
@@ -52,11 +52,7 @@ export default class HomeScreen extends React.Component {
           <View style={styles.getStartedContainer}>
             {/*{this._maybeRenderDevelopmentModeWarning()}*/}
 
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
+            <TokenProgress/>
 
             <Text style={styles.getStartedText}>
               {this.state.message}
