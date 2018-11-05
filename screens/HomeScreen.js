@@ -59,6 +59,11 @@ export default class HomeScreen extends React.Component {
             </Text>
           </View>
 
+          <View style={styles.actionsContainer}>
+
+
+          </View>
+
           <View style={styles.helpContainer}>
             <Button onPress={this._handleHelpPress} style={styles.helpLink} title='Reload'>
             </Button>

@@ -91,4 +91,12 @@ export const HomeScreenStyles = StyleSheet.create({
   helpLink: {
     paddingVertical: 15,
   },
+  actionsContainer: {
+    flex:1,
+    margin:15,
+    borderRadius:4,
+    borderWidth: 0.5,
+    height:200,
+    borderColor: '#d6d7da',
+  }
 });
