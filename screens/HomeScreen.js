@@ -20,7 +20,7 @@ export default class HomeScreen extends React.Component {
     super();
     this.state = {
       message: 'no message',
-      backgroundColor: infoColor
+      backgroundColor: infoColor,
     };
   }
 
@@ -41,18 +41,48 @@ export default class HomeScreen extends React.Component {
   }
 
 
-  generateView() {
+  generateView () {
     // switch (this.state.message) {
     //   case 1
     // }
     return(
       <View style={_.merge(styles.actionsContainer, {backgroundColor: this.state.backgroundColor})}>
         <TokenProgress/>
+        <View style={styles.messageContainer}>
+          <Text style={styles.messageText}>
+            {this.state.message}
+          </Text>
+          <View style={styles.messageActions}>
+            <TouchableOpacity style={styles.actionButton}><Text>Yes</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.cancelButton}><Text>Cancel</Text></TouchableOpacity>
+          </View>
+        </View>
 
-        <Text style={styles.getStartedText}>
-          {this.state.message}
-        </Text>
+        <View style={styles.goodContainer}>
+          <Image
+            source={require('../assets/images/watchcat.png')}
+            style={styles.goodImage}
+          />
+          <View style={styles.goodDescription}>
+            <Text style={styles.good_title}>
+              Watchcat
+            </Text>
+            <Text>
+              Super easy to pack
+              {"\n"}
+              size: 800 * 300
+              {"\n"}
+              weight: 3.00 kg
+            </Text>
+            <Text style={styles.good_seller}>
+              Buy from: Amazon EU S.a.r.L.
+            </Text>
+            <Text style={styles.good_price}>
+              EUR 699.99
+            </Text>
+          </View>
 
+        </View>
       </View>
     )
   }

@@ -9,6 +9,14 @@ export const HomeScreenStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  actionsContainer: {
+    flex:1,
+    margin:15,
+    borderRadius:8,
+    borderWidth: 0.5,
+    height:300,
+    borderColor: '#d6d7da',
+  },
   developmentModeText: {
     marginBottom: 20,
     color: 'rgba(0,0,0,0.4)',
@@ -28,7 +36,30 @@ export const HomeScreenStyles = StyleSheet.create({
     width: 150,
     height: 150,
     resizeMode: 'contain',
-
+  },
+  goodContainer: {
+    alignSelf: 'stretch',
+    flexDirection: 'row'
+  },
+  goodDescription: {
+    flex: 1,
+    flexWrap: 'wrap',
+  },
+  good_title: {
+    color: 'grey',
+    fontSize: 20,
+  },
+  good_seller: {
+    fontStyle: 'italic'
+  },
+  good_price: {
+    fontWeight: 'bold'
+  },
+  goodImage: {
+    width: 150,
+    alignSelf: 'center',
+    height: 150,
+    resizeMode: 'contain',
   },
   poweredImage: {
     width: 80,
@@ -51,11 +82,34 @@ export const HomeScreenStyles = StyleSheet.create({
     borderRadius: 3,
     paddingHorizontal: 4,
   },
-  getStartedText: {
+  messageContainer: {
+    height:100,
+  },
+  messageText: {
     fontSize: 17,
     color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
+    lineHeight: 40,
     textAlign: 'center',
+  },
+  messageActions: {
+    padding:10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems:'center'
+  },
+  actionButton: {
+    height: 30,
+    width:50,
+    justifyContent: 'center',
+    alignItems:'center'
+    // alignSelf:'center',
+  },
+  cancelButton: {
+    height: 30,
+    width:50,
+    justifyContent: 'center',
+    alignItems:'center'
+    // alignSelf: 'flex-end'
   },
   tabBarInfoContainer: _.merge({
     position: 'absolute',
@@ -93,12 +147,4 @@ export const HomeScreenStyles = StyleSheet.create({
   helpLink: {
     paddingVertical: 15,
   },
-  actionsContainer: {
-    flex:1,
-    margin:15,
-    borderRadius:8,
-    borderWidth: 0.5,
-    height:200,
-    borderColor: '#d6d7da',
-  }
 });
