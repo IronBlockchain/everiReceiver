@@ -4,13 +4,12 @@ import { ProgressBarAndroid, StyleSheet, View, Platform, ProgressViewIOS} from '
 const barColor = "#2196F3";
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "space-evenly",
-    padding: 10
+    // justifyContent: "flex-start",
+    padding: 20
   },
   bar: {
-    width:200,
-    flex:1
+    // width:200,
+    alignSelf: "stretch"
   }
 });
 

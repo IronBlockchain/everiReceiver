@@ -10,32 +10,51 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-import {HomeScreenStyles as styles} from "../styles/HomeScreenStyle";
+import {HomeScreenStyles as styles, infoColor} from "../styles/HomeScreenStyle";
 import TokenProgress from '../components/TokenProgress';
+import {messageRouter} from "../utils/messages";
+import _ from 'lodash'
 
 export default class HomeScreen extends React.Component {
   constructor (props) {
     super();
-    this.state = {message: 'no message'};
+    this.state = {
+      message: 'no message',
+      backgroundColor: infoColor
+    };
   }
 
   static navigationOptions = {
     header: null,
   };
 
-  componentDidMount(){
-    const ws = new WebSocket('ws://192.168.178.22:1337', (result, code)=> {
+  componentDidMount() {
+    const ws = new WebSocket('ws://192.168.178.22:1337', (result, code) => {
       console.log(result, code)
     })
     ws.onopen = () => {
       // connection opened
       console.log('is opened')
-      ws.send('something'); // send a message
+      ws.send('test'); // send a message
     };
-    ws.onmessage = (message) => {
-      this.setState({message: message.data.toString()})
-      console.log('receive message4')
-    }
+    ws.onmessage = _.curry(messageRouter)(this.setState.bind(this))
+  }
+
+
+  generateView() {
+    // switch (this.state.message) {
+    //   case 1
+    // }
+    return(
+      <View style={_.merge(styles.actionsContainer, {backgroundColor: this.state.backgroundColor})}>
+        <TokenProgress/>
+
+        <Text style={styles.getStartedText}>
+          {this.state.message}
+        </Text>
+
+      </View>
+    )
   }
 
   render() {
@@ -52,17 +71,10 @@ export default class HomeScreen extends React.Component {
           <View style={styles.getStartedContainer}>
             {/*{this._maybeRenderDevelopmentModeWarning()}*/}
 
-            <TokenProgress/>
-
-            <Text style={styles.getStartedText}>
-              {this.state.message}
-            </Text>
-          </View>
-
-          <View style={styles.actionsContainer}>
-
 
           </View>
+
+          {this.generateView()}
 
           <View style={styles.helpContainer}>
             <Button onPress={this._handleHelpPress} style={styles.helpLink} title='Reload'>

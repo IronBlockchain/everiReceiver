@@ -2,6 +2,8 @@ import {Platform, StyleSheet} from "react-native";
 import _ from 'lodash';
 import {inlineImage} from "./utilStyle";
 
+export const infoColor = '#DAF7A6'
+
 export const HomeScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -94,7 +96,7 @@ export const HomeScreenStyles = StyleSheet.create({
   actionsContainer: {
     flex:1,
     margin:15,
-    borderRadius:4,
+    borderRadius:8,
     borderWidth: 0.5,
     height:200,
     borderColor: '#d6d7da',
