@@ -4,6 +4,18 @@ import {inlineImage} from "./utilStyle";
 
 export const infoColor = '#DAF7A6'
 
+export const button = {
+  margin: 10,
+  height: 30,
+  width: 100,
+  justifyContent: 'center',
+  alignItems: 'center',
+  // alignSelf:'center',
+  borderRadius: 4,
+  borderWidth: 0.5,
+  borderColor: '#d6d7da',
+}
+
 export const HomeScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -88,7 +100,7 @@ export const HomeScreenStyles = StyleSheet.create({
   messageText: {
     fontSize: 17,
     color: 'rgba(96,100,109, 1)',
-    lineHeight: 40,
+    lineHeight: 30,
     textAlign: 'center',
   },
   messageActions: {
@@ -97,20 +109,12 @@ export const HomeScreenStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems:'center'
   },
-  actionButton: {
-    height: 30,
-    width:50,
-    justifyContent: 'center',
-    alignItems:'center'
-    // alignSelf:'center',
-  },
-  cancelButton: {
-    height: 30,
-    width:50,
-    justifyContent: 'center',
-    alignItems:'center'
-    // alignSelf: 'flex-end'
-  },
+  actionButton: _.merge(button,{
+
+  }),
+  cancelButton: _.merge(button,{
+
+  }),
   tabBarInfoContainer: _.merge({
     position: 'absolute',
     bottom: 0,

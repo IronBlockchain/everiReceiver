@@ -8,12 +8,14 @@ const receiverType = {
 const messageType = {
   user: {
     ISSUE: 'issueToken',
-    CONFIRM: 'confirm'
+    CONFIRM: 'confirm',
+    CANCEL: 'user_cancel',
   },
   shop: {
     PROVE_TOKEN: 'prove_token',
   },
   deliver: {
+    INIT_REQUEST: 'init_request',
     GENERATE_PASS: 'generate_pass',
     PASS_REQUEST: 'pass_request',
     LEAVE_ROOM: 'leave_room'
@@ -36,17 +38,25 @@ const messageType = {
   TOKEN_DESTROYED: 'token_destroyed',
 }
 
-export const messageRouter = (setState, message) => {
-  console.log('message is', message.data)
-  setState({message: message.data})
+export const messageRouter = (setState, ws, rawMessage) => {
+  const sendMessage = message => ws.send(JSON.stringify(message));
+  const message = JSON.parse(rawMessage.data)
+  // console.log('message is', message)
   switch (message.type) {
-    case messageType.user.ISSUE:
+    case messageType.deliver.INIT_REQUEST:
       setState({
+        started: true,
         message: 'Your Deliver is sent',
         displayImage: true,
         showAction: true,
-        actionYes: 'Issue Token',
-        actionNo: 'Reject'
+        actionYesText: 'Issue Token',
+        actionNoText: 'Reject',
+        actionYes: ()=>sendMessage({
+          type: messageType.user.ISSUE,
+        }),
+        actionNo: ()=> sendMessage({
+          type: messageType.user.CANCEL,
+        })
       });
       break;
     case messageType.ISSUE_WAIT:
@@ -101,8 +111,8 @@ export const messageRouter = (setState, message) => {
         message: 'Door success closed',
         displayImage: false,
         showAction: true,
-        actionYes: 'Issue Token',
-        actionNo: 'Reject'
+        actionYesText: 'Issue Token',
+        actionNoText: 'Reject'
       })
       break;
   }

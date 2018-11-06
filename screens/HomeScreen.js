@@ -21,6 +21,13 @@ export default class HomeScreen extends React.Component {
     this.state = {
       message: 'no message',
       backgroundColor: infoColor,
+      displayImage: false,
+      showAction: false,
+      actionYesText: 'Yes',
+      actionNoText: 'Cancel',
+      actionYes: _.identity,
+      actionNo: _.identity,
+      started: false,
     };
   }
 
@@ -37,7 +44,30 @@ export default class HomeScreen extends React.Component {
       console.log('is opened')
       ws.send('test'); // send a message
     };
-    ws.onmessage = _.curry(messageRouter)(this.setState.bind(this))
+    ws.onmessage = _.curry(messageRouter)(this.setState.bind(this))(ws)
+  }
+
+  generateAction() {
+    if(this.state.showAction){
+      return(
+        <View style={styles.messageActions}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={this.state.actionYes}>
+            <Text>{this.state.actionYesText}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.cancelButton}
+            onPress={this.state.actionNo}>
+            <Text>{this.state.actionNoText}</Text>
+          </TouchableOpacity>
+        </View>
+      )
+    }else {
+      return(
+        <View style={styles.messageActions}/>
+      )
+    }
   }
 
 
@@ -52,12 +82,10 @@ export default class HomeScreen extends React.Component {
           <Text style={styles.messageText}>
             {this.state.message}
           </Text>
-          <View style={styles.messageActions}>
-            <TouchableOpacity style={styles.actionButton}><Text>Yes</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.cancelButton}><Text>Cancel</Text></TouchableOpacity>
-          </View>
+          {this.generateAction()}
         </View>
 
+        {this.state.displayImage &&
         <View style={styles.goodContainer}>
           <Image
             source={require('../assets/images/watchcat.png')}
@@ -81,8 +109,7 @@ export default class HomeScreen extends React.Component {
               EUR 699.99
             </Text>
           </View>
-
-        </View>
+        </View>}
       </View>
     )
   }
@@ -104,7 +131,7 @@ export default class HomeScreen extends React.Component {
 
           </View>
 
-          {this.generateView()}
+          {this.state.started && this.generateView()}
 
           <View style={styles.helpContainer}>
             <Button onPress={this._handleHelpPress} style={styles.helpLink} title='Reload'>
