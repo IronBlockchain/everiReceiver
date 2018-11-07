@@ -70,46 +70,70 @@ export const messageRouter = (setState, ws, rawMessage) => {
         message: 'Generating the non fungible token...',
         displayImage: true,
         showAction: false,
+        deliverMessage: 'Now user issuing the token...',
       })
       break;
     case messageTypes.TRANSFER_SHOP:
       setState({
         message: 'Generate success, now sending it to data center',
+        deliverMessage: 'Generate success, now sending it to data center',
       })
       break;
     case messageTypes.PROVE_TOKEN_WAIT:
       setState({
-        message: 'Transfer success, now waiting for prove from data center'
+        message: 'Transfer success, now waiting for prove from data center',
+        deliverMessage: 'Transfer success, now waiting for prove from data center',
       })
       break;
     case messageTypes.TRANSFER_DELIVER_WAIT:
       setState({
-        message: 'Prove success, now sending the token to deliver'
+        message: 'Prove success, now sending the token to deliver',
+        deliverMessage: 'Prove success, now waiting for the access token'
       })
       break;
     case messageTypes.TRANSFER_DELIVER_FINISH:
       setState({
-        message: 'Token successfully transferred to deliver'
+        message: 'Token successfully transferred to deliver',
+        deliverMessage: 'Receive the token',
+        onDeliverAction: ()=> {
+          sendMessage({type:messageTypes.deliver.GENERATE_PASS})
+          setState({
+            showDeliverAction: false,
+          })},
+        deliverActionText: "Generate Pass",
+        showDeliverAction: true,
       })
       break;
     case messageTypes.GENERATE_PASS_WAITING:
       setState({
-        message: 'Access Pass generating for deliver...'
+        message: 'Deliver request to generate access Pass...',
+        deliverMessage: 'Generating access pass now...',
       })
       break;
     case messageTypes.GENERATE_PASS_FINISHED:
       setState({
-        message: 'Access Pass successfully generated'
+        message: 'Access Pass successfully generated for deliver, waiting for opening the door',
+        deliverMessage: 'Access Pass successfully generated',
       })
       break;
-    case messageTypes.PASS_WAITING:
-      setState({
-        message: 'Waiting for the deliver to open the door'
-      })
-      break;
+    // case messageTypes.PASS_WAITING:
+    //   setState({
+    //     message: 'Waiting for the deliver to open the door'
+    //   })
+    //   break;
     case messageTypes.PASS_FINISHED:
       setState({
-        message: 'Successful entering the room'
+        message: 'Successful entering the room',
+        deliverMessage: 'successful entering the room',
+        showAction: true,
+        actionYesText: 'Open the video',
+        actionNoText: 'Report malice',
+        actionYes: () => sendMessage({
+          showVideo: true
+        }),
+        actionNo: ()=> sendMessage({
+          showVideo: false
+        })
       })
       break;
     case messageTypes.CONFIRM_FINISHED:

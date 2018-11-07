@@ -31,8 +31,13 @@ export default class HomeScreen extends React.Component {
       started: false,
       mode: null,
       openScanner: false,
-      showScanner: true,
-      deliverMessage: 'When customer is out of home, request access by QR code'
+      showDeliverAction: true,
+      deliverMessage: 'When customer is out of home, request access by QR code',
+      onDeliverAction: ()=> this.setState({
+        openScanner: true,
+        showDeliverAction: false,
+      }),
+      deliverActionText: "Scan User code",
     };
   }
 
@@ -51,7 +56,7 @@ export default class HomeScreen extends React.Component {
     ws.onopen = () => {
       // connection opened
       console.log('is opened')
-      ws.send('test'); // send a message
+      // ws.send('test'); // send a message
     };
     ws.onmessage = _.curry(messageRouter)(this.setState.bind(this))(ws)
   }
@@ -97,8 +102,8 @@ export default class HomeScreen extends React.Component {
               <Text style={styles.messageText}>
                 {this.state.deliverMessage}
               </Text>
-              {this.state.showScanner &&
-                <Button title={"Scan User code"} onPress={()=>this.setState({openScanner: true})}/>}
+              {this.state.showDeliverAction &&
+                <Button title={this.state.deliverActionText} onPress={this.state.onDeliverAction}/>}
 
             </View>
             {this.generateImage()}
@@ -112,7 +117,6 @@ export default class HomeScreen extends React.Component {
                   deliverMessage: 'Now waiting for the response from User',
                   displayImage: true,
                   showAction: false,
-                  showScanner: false,
                 })
                 this.ws.send(JSON.stringify({type: messageTypes.deliver.INIT_REQUEST}));
               }}
@@ -193,7 +197,7 @@ export default class HomeScreen extends React.Component {
           </View>
 
           {!this.state.mode && <View>
-            <Button title='deliver' onPress={()=>this.setState({mode: 'deliver'})}/>
+            <Button title='deliver' onPress={()=>this.setState({mode: 'deliver', displayImage: true})}/>
             <Button title='user' onPress={()=>this.setState({mode: 'user'})}/>
           </View>}
 
