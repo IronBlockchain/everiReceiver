@@ -13,7 +13,7 @@ import { WebBrowser } from 'expo';
 import {HomeScreenStyles as styles, infoColor} from "../styles/HomeScreenStyle";
 import TokenProgress from '../components/TokenProgress';
 import {messageRouter, messageTypes} from "../utils/messages";
-import { BarCodeScanner, Permissions } from 'expo';
+import { BarCodeScanner, Permissions, Video} from 'expo';
 import _ from 'lodash'
 
 export default class HomeScreen extends React.Component {
@@ -32,6 +32,7 @@ export default class HomeScreen extends React.Component {
       mode: null,
       openScanner: false,
       showDeliverAction: true,
+      displayVideo:false,
       deliverMessage: 'When customer is out of home, request access by QR code',
       onDeliverAction: ()=> this.setState({
         openScanner: true,
@@ -125,7 +126,9 @@ export default class HomeScreen extends React.Component {
           </View>
         </View>
       )
-    } else if (this.state.mode ==='user' && this.state.started){
+    } else if (this.state.mode ==='user'
+      && this.state.started
+    ){
     return(
       <View style={_.merge(styles.actionsContainer, {backgroundColor: this.state.backgroundColor})}>
         <TokenProgress/>
@@ -149,7 +152,20 @@ export default class HomeScreen extends React.Component {
   }
 
   generateImage () {
-    if(this.state.displayImage) {
+    if(this.state.displayVideo
+      // || true
+    ){
+      return(<Video
+        source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+        rate={1.0}
+        volume={1.0}
+        isMuted={false}
+        resizeMode="cover"
+        shouldPlay
+        isLooping={false}
+        style={{ width: 300, height: 300 }}
+      />)
+    } else if (this.state.displayImage) {
       return (
         <View style={styles.goodContainer}>
           <Image

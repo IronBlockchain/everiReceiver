@@ -129,10 +129,12 @@ export const messageRouter = (setState, ws, rawMessage) => {
         actionYesText: 'Open the video',
         actionNoText: 'Report malice',
         actionYes: () => sendMessage({
-          showVideo: true
+          displayVideo: true,
+          displayImage: false,
         }),
         actionNo: ()=> sendMessage({
-          showVideo: false
+          displayVideo: false,
+          displayImage: true,
         })
       })
       break;
@@ -140,6 +142,7 @@ export const messageRouter = (setState, ws, rawMessage) => {
       setState({
         message: 'Door success closed',
         displayImage: false,
+        displayVideo: false,
         showAction: true,
         actionYesText: 'Issue Token',
         actionNoText: 'Reject'
