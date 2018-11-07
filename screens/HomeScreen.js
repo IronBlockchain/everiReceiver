@@ -127,7 +127,7 @@ export default class HomeScreen extends React.Component {
         </View>
       )
     } else if (this.state.mode ==='user'
-      && this.state.started
+      // && this.state.started
     ){
     return(
       <View style={_.merge(styles.actionsContainer, {backgroundColor: this.state.backgroundColor})}>
@@ -153,7 +153,7 @@ export default class HomeScreen extends React.Component {
 
   generateImage () {
     if(this.state.displayVideo
-      // || true
+      || true
     ){
       return(<Video
         source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
