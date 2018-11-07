@@ -6,7 +6,8 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import HistoryScreen from '../screens/HistoryScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import TokenScreen from '../screens/TokenScreen'
+import TokenScreen from '../screens/TokenScreen';
+import DeliverScreen from '../screens/DeliverScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -25,6 +26,25 @@ HomeStack.navigationOptions = {
     />
   ),
 };
+
+const DeliverStack = createStackNavigator({
+  Deliver: DeliverScreen
+})
+
+DeliverStack.navigationOptions = {
+  tabBarLabel: 'Deliver',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
+  ),
+};
+
 
 const HistoryStack = createStackNavigator({
   History: HistoryScreen,
@@ -57,6 +77,7 @@ ProfileStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   HomeStack,
+  DeliverStack,
   HistoryStack,
   ProfileStack,
 });
