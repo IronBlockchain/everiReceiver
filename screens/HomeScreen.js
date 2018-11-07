@@ -31,6 +31,7 @@ export default class HomeScreen extends React.Component {
       actionNo: _.identity,
       started: false,
       mode: null,
+      progress: 0.1,
       openScanner: false,
       showDeliverAction: true,
       displayVideo:false,
@@ -130,7 +131,7 @@ export default class HomeScreen extends React.Component {
     } else if (this.state.mode ==='user' && this.state.started){
     return(
       <View style={_.merge(styles.actionsContainer, {backgroundColor: this.state.backgroundColor})}>
-        <TokenProgress/>
+        <TokenProgress progress={this.state.progress}/>
         <View style={styles.messageContainer}>
           <Text style={styles.messageText}>
             {this.state.message}
@@ -186,25 +187,25 @@ export default class HomeScreen extends React.Component {
       return (
         <View style={styles.goodContainer}>
           <Image
-            source={require('../assets/images/cook.jpg')}
+            source={require('../assets/images/1.jpg')}
             style={styles.goodImage}
           />
           <View style={styles.goodDescription}>
             <Text style={styles.good_title}>
-              Cook machine
+              Wiper blade
             </Text>
             <Text>
-              Heißgetränkeautomat mit Auslaufhahn
+              Bosch 3397118986 Wischblatt
               {"\n"}
-              für 14 1-Liter-Rundrandgläser
+              Aerotwin Nachrüstungsset AR532S
               {"\n"}
-              white & black
+              Länge: 530/500
             </Text>
             <Text style={styles.good_seller}>
               Buy from: Amazon EU S.a.r.L.
             </Text>
             <Text style={styles.good_price}>
-              EUR 69.99
+              EUR 29.34
             </Text>
           </View>
         </View>
@@ -237,8 +238,8 @@ export default class HomeScreen extends React.Component {
           {this.generateView()}
 
           <View style={styles.helpContainer}>
-            <Button onPress={this._handleHelpPress} style={styles.helpLink} title='Reload'>
-            </Button>
+            {/*<Button onPress={this._handleHelpPress} style={styles.helpLink} title='Reload'>*/}
+            {/*</Button>*/}
           </View>
         </ScrollView>
 

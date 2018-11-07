@@ -1,21 +1,25 @@
 import React from 'react';
-import { ScrollView, FlatList, ListView, StyleSheet, Text , TouchableOpacity} from 'react-native';
+import { ScrollView, FlatList, ListView, StyleSheet, Text , TouchableOpacity, Image, View} from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import {history, findImage} from "../utils/history";
 
 export default class HistoryScreen extends React.Component {
   static navigationOptions = {
-    title: 'Links',
+    title: 'History',
   };
 
   render() {
     return (
-      <FlatList style={styles.container} data={history}
+      <FlatList style={styles.list} data={history}
           renderItem={({item}) =>
             <TouchableOpacity
-              style={styles.item}
-              onPress={()=>this.props.navigation.navigate('Token', { tokenName: item.key })}>
-              <Text> {item.value.title} </Text>
+              style={styles.itemContainer}
+              onPress={()=>this.props.navigation.navigate('Token', { token: item.value })}>
+              <Image source={findImage(item.key)} style={styles.itemImage}/>
+              <View style={styles.itemText}>
+                <Text style={styles.itemTitle}>{item.value.title} </Text>
+                <Text style={styles.itemToken}>{item.value.tokenName} </Text>
+              </View>
             </TouchableOpacity>
           }
         />
@@ -24,14 +28,29 @@ export default class HistoryScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  list: {
     flex: 1,
     // paddingTop: 15,
     backgroundColor: '#fff',
   },
-  item: {
+  itemContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#FFFFFF',
     padding: 20
+  },
+  itemTitle: {
+    fontWeight: 'bold',
+  },
+  itemToken: {
+  },
+  itemText: {
+    justifyContent:'center',
+    paddingLeft: 30,
+    aspectRatio: 2,
+  },
+  itemImage: {
+    width: 80,
+    aspectRatio: 1,
   }
 });

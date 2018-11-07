@@ -7,7 +7,7 @@ export const infoColor = '#DAF7A6'
 export const button = {
   margin: 10,
   height: 30,
-  width: 100,
+  width: 110,
   justifyContent: 'center',
   alignItems: 'center',
   // alignSelf:'center',
@@ -26,7 +26,7 @@ export const HomeScreenStyles = StyleSheet.create({
     margin:15,
     borderRadius:8,
     borderWidth: 0.5,
-    height:300,
+    height:350,
     borderColor: '#d6d7da',
   },
   developmentModeText: {
@@ -61,6 +61,7 @@ export const HomeScreenStyles = StyleSheet.create({
   goodDescription: {
     flex: 1,
     flexWrap: 'wrap',
+    paddingLeft: 10,
   },
   good_title: {
     color: 'grey',

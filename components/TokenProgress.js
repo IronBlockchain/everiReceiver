@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
   },
   bar: {
     // width:200,
+    transform: [{ scaleX: 1.0 }, { scaleY: 2.5 }],
     alignSelf: "stretch"
   }
 });
@@ -24,12 +25,13 @@ export default class TokenProgress extends Component {
           color={barColor}
           styleAttr="Horizontal"
           indeterminate={false}
-          progress={0.2}
+          progress={this.props.progress}
         /> :
         <ProgressViewIOS
           progressTintColor={barColor}
+          trackTintColor={'#eee'}
           style={styles.bar}
-          progress={0.2}
+          progress={this.props.progress}
         />}
       </View>
     );

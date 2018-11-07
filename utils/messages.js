@@ -23,7 +23,7 @@ export const messageRouter = (setState, ws, rawMessage) => {
     case messageTypes.deliver.INIT_REQUEST:
       setState({
         started: true,
-        message: 'Your Deliver is sent',
+        message: 'Your package is just arrived at the door',
         displayImage: true,
         showAction: true,
         actionYesText: 'Issue Token',
@@ -48,18 +48,21 @@ export const messageRouter = (setState, ws, rawMessage) => {
       setState({
         message: 'Generate success, now sending it to data center',
         deliverMessage: 'Generate success, now sending it to data center',
+        progress:0.2,
       })
       break;
     case messageTypes.PROVE_TOKEN_WAIT:
       setState({
         message: 'Transfer success, now waiting for prove from data center',
         deliverMessage: 'Transfer success, now waiting for prove from data center',
+        progress:0.3,
       })
       break;
     case messageTypes.TRANSFER_DELIVER_WAIT:
       setState({
         message: 'Prove success, now sending the token to deliver',
-        deliverMessage: 'Prove success, now waiting for the access token'
+        deliverMessage: 'Prove success, now waiting for the access token',
+        progress:0.4,
       })
       break;
     case messageTypes.TRANSFER_DELIVER_FINISH:
@@ -73,18 +76,21 @@ export const messageRouter = (setState, ws, rawMessage) => {
           })},
         deliverActionText: "Generate Pass",
         showDeliverAction: true,
+        progress: 0.5,
       })
       break;
     case messageTypes.GENERATE_PASS_WAITING:
       setState({
         message: 'Deliver request to generate access Pass...',
         deliverMessage: 'Generating access pass now...',
+        progress: 0.6,
       })
       break;
     case messageTypes.GENERATE_PASS_FINISHED:
       setState({
         message: 'Access Pass successfully generated for deliver, waiting for opening the door',
-        deliverMessage: 'Access Pass successfully generated',
+        deliverMessage: 'Access Pass successfully generated! Now you can use pass',
+        progress: 0.6,
       })
       break;
     // case messageTypes.PASS_WAITING:
@@ -104,7 +110,8 @@ export const messageRouter = (setState, ws, rawMessage) => {
         }),
         actionNo: ()=> setState({
           displayVideo: false,
-        })
+        }),
+        progress: 0.7,
       })
       break;
     case messageTypes.ADD_HASH_START:
@@ -114,6 +121,7 @@ export const messageRouter = (setState, ws, rawMessage) => {
         displayImage: false,
         displayVideo: false,
         showAction: false,
+        progress: 0.8,
       })
       break;
     case messageTypes.ADD_HASH_FINISHED:
@@ -123,12 +131,14 @@ export const messageRouter = (setState, ws, rawMessage) => {
         displayImage: false,
         displayVideo: false,
         showAction: false,
+        progress: 0.9,
       })
       break;
     case messageTypes.TOKEN_DESTROYED:
       setState({
         message: 'Token successfully destroyed!',
         deliverMessage: 'Delivery task successfully finished!',
+        progress: 1,
       })
   }
 }
