@@ -33,6 +33,10 @@ export default class App extends React.Component {
         require('./assets/images/EveriToken.png'),
         require('./assets/images/EveriDeliver.jpg'),
         require('./assets/images/blockweise.png'),
+        require('./assets/images/1.jpg'),
+        require('./assets/images/2.jpg'),
+        require('./assets/images/3.jpg'),
+        require('./assets/images/4.jpg'),
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar

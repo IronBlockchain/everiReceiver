@@ -12,7 +12,8 @@ import {
 import { WebBrowser } from 'expo';
 import {HomeScreenStyles as styles, infoColor} from "../styles/HomeScreenStyle";
 import TokenProgress from '../components/TokenProgress';
-import {messageRouter, messageTypes} from "../utils/messages";
+import {messageRouter} from "../utils/messages";
+import {messageTypes} from "../config";
 import { BarCodeScanner, Permissions, Video} from 'expo';
 import _ from 'lodash'
 

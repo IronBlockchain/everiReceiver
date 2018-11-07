@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, FlatList, ListView, StyleSheet, Text , TouchableOpacity} from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
+import {history, findImage} from "../utils/history";
 
 export default class HistoryScreen extends React.Component {
   static navigationOptions = {
@@ -9,21 +10,12 @@ export default class HistoryScreen extends React.Component {
 
   render() {
     return (
-      <FlatList style={styles.container} data={[
-            {key: 'Devin'},
-            {key: 'Jackson'},
-            {key: 'James'},
-            {key: 'Joel'},
-            {key: 'John'},
-            {key: 'Jillian'},
-            {key: 'Jimmy'},
-            {key: 'Julie'},
-          ]}
+      <FlatList style={styles.container} data={history}
           renderItem={({item}) =>
             <TouchableOpacity
               style={styles.item}
-              onPress={()=>this.props.navigation.navigate('Token', { name: item.key })}>
-              <Text> {item.key} </Text>
+              onPress={()=>this.props.navigation.navigate('Token', { tokenName: item.key })}>
+              <Text> {item.value.title} </Text>
             </TouchableOpacity>
           }
         />
