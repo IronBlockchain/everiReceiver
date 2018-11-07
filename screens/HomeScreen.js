@@ -12,7 +12,8 @@ import {
 import { WebBrowser } from 'expo';
 import {HomeScreenStyles as styles, infoColor} from "../styles/HomeScreenStyle";
 import TokenProgress from '../components/TokenProgress';
-import {messageRouter} from "../utils/messages";
+import {messageRouter, messageTypes} from "../utils/messages";
+import { BarCodeScanner, Permissions } from 'expo';
 import _ from 'lodash'
 
 export default class HomeScreen extends React.Component {
@@ -28,6 +29,10 @@ export default class HomeScreen extends React.Component {
       actionYes: _.identity,
       actionNo: _.identity,
       started: false,
+      mode: null,
+      openScanner: false,
+      showScanner: true,
+      deliverMessage: 'When customer is out of home, request access by QR code'
     };
   }
 
@@ -35,10 +40,14 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({ hasCameraPermission: status === 'granted' });
+
     const ws = new WebSocket('ws://192.168.178.22:1337', (result, code) => {
       console.log(result, code)
     })
+    this.ws = ws;
     ws.onopen = () => {
       // connection opened
       console.log('is opened')
@@ -70,11 +79,49 @@ export default class HomeScreen extends React.Component {
     }
   }
 
+  onSuccess(e) {
+    // Linking
+    //   .openURL(e.data)
+    //   .catch(err => console.error('An error occured', err));
+  }
 
   generateView () {
     // switch (this.state.message) {
     //   case 1
     // }
+    if(this.state.mode==='deliver'){
+      return (
+        <View>
+          <View style={_.merge(styles.actionsContainer, {backgroundColor: this.state.backgroundColor})}>
+            <View style={styles.messageContainer}>
+              <Text style={styles.messageText}>
+                {this.state.deliverMessage}
+              </Text>
+              {this.state.showScanner &&
+                <Button title={"Scan User code"} onPress={()=>this.setState({openScanner: true})}/>}
+
+            </View>
+            {this.generateImage()}
+
+          </View>
+          <View style={{height:100}}>
+            {this.state.hasCameraPermission && this.state.openScanner && <BarCodeScanner
+              onBarCodeScanned={()=>{
+                this.setState({
+                  openScanner: false,
+                  deliverMessage: 'Now waiting for the response from User',
+                  displayImage: true,
+                  showAction: false,
+                  showScanner: false,
+                })
+                this.ws.send(JSON.stringify({type: messageTypes.deliver.INIT_REQUEST}));
+              }}
+              style={StyleSheet.absoluteFill}
+            />}
+          </View>
+        </View>
+      )
+    } else if (this.state.mode ==='user' && this.state.started){
     return(
       <View style={_.merge(styles.actionsContainer, {backgroundColor: this.state.backgroundColor})}>
         <TokenProgress/>
@@ -84,34 +131,48 @@ export default class HomeScreen extends React.Component {
           </Text>
           {this.generateAction()}
         </View>
+        {this.generateImage()}
+      </View>
+    )}else if (this.state.mode ==='user'){
+      return(
+          <View style={styles.messageContainer}>
+            <Text style={styles.messageText}>
+              Your package and access manager
+            </Text>
+          </View>
+      )
+    }
+  }
 
-        {this.state.displayImage &&
+  generateImage () {
+    if(this.state.displayImage) {
+      return (
         <View style={styles.goodContainer}>
           <Image
-            source={require('../assets/images/watchcat.png')}
+            source={require('../assets/images/cook.jpg')}
             style={styles.goodImage}
           />
           <View style={styles.goodDescription}>
             <Text style={styles.good_title}>
-              Watchcat
+              Cook machine
             </Text>
             <Text>
-              Super easy to pack
+              Heißgetränkeautomat mit Auslaufhahn
               {"\n"}
-              size: 800 * 300
+              für 14 1-Liter-Rundrandgläser
               {"\n"}
-              weight: 3.00 kg
+              white & black
             </Text>
             <Text style={styles.good_seller}>
               Buy from: Amazon EU S.a.r.L.
             </Text>
             <Text style={styles.good_price}>
-              EUR 699.99
+              EUR 69.99
             </Text>
           </View>
-        </View>}
-      </View>
-    )
+        </View>
+      )
+    }
   }
 
   render() {
@@ -131,7 +192,12 @@ export default class HomeScreen extends React.Component {
 
           </View>
 
-          {this.state.started && this.generateView()}
+          {!this.state.mode && <View>
+            <Button title='deliver' onPress={()=>this.setState({mode: 'deliver'})}/>
+            <Button title='user' onPress={()=>this.setState({mode: 'user'})}/>
+          </View>}
+
+          {this.generateView()}
 
           <View style={styles.helpContainer}>
             <Button onPress={this._handleHelpPress} style={styles.helpLink} title='Reload'>

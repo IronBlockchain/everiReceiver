@@ -5,7 +5,12 @@ const receiverType = {
   USER: 'user',
 }
 
-const messageType = {
+const mode = {
+  USER: 'user',
+  DELIVER: 'deliver',
+}
+
+export const messageTypes = {
   user: {
     ISSUE: 'issueToken',
     CONFIRM: 'confirm',
@@ -42,8 +47,9 @@ export const messageRouter = (setState, ws, rawMessage) => {
   const sendMessage = message => ws.send(JSON.stringify(message));
   const message = JSON.parse(rawMessage.data)
   // console.log('message is', message)
+  // if(!_.includes(message.receiver, mode)) return;
   switch (message.type) {
-    case messageType.deliver.INIT_REQUEST:
+    case messageTypes.deliver.INIT_REQUEST:
       setState({
         started: true,
         message: 'Your Deliver is sent',
@@ -51,62 +57,62 @@ export const messageRouter = (setState, ws, rawMessage) => {
         showAction: true,
         actionYesText: 'Issue Token',
         actionNoText: 'Reject',
-        actionYes: ()=>sendMessage({
-          type: messageType.user.ISSUE,
+        actionYes: () => sendMessage({
+          type: messageTypes.user.ISSUE,
         }),
         actionNo: ()=> sendMessage({
-          type: messageType.user.CANCEL,
+          type: messageTypes.user.CANCEL,
         })
       });
       break;
-    case messageType.ISSUE_WAIT:
+    case messageTypes.ISSUE_WAIT:
       setState({
         message: 'Generating the non fungible token...',
         displayImage: true,
         showAction: false,
       })
       break;
-    case messageType.TRANSFER_SHOP:
+    case messageTypes.TRANSFER_SHOP:
       setState({
         message: 'Generate success, now sending it to data center',
       })
       break;
-    case messageType.PROVE_TOKEN_WAIT:
+    case messageTypes.PROVE_TOKEN_WAIT:
       setState({
         message: 'Transfer success, now waiting for prove from data center'
       })
       break;
-    case messageType.TRANSFER_DELIVER_WAIT:
+    case messageTypes.TRANSFER_DELIVER_WAIT:
       setState({
         message: 'Prove success, now sending the token to deliver'
       })
       break;
-    case messageType.TRANSFER_DELIVER_FINISH:
+    case messageTypes.TRANSFER_DELIVER_FINISH:
       setState({
         message: 'Token successfully transferred to deliver'
       })
       break;
-    case messageType.GENERATE_PASS_WAITING:
+    case messageTypes.GENERATE_PASS_WAITING:
       setState({
         message: 'Access Pass generating for deliver...'
       })
       break;
-    case messageType.GENERATE_PASS_FINISHED:
+    case messageTypes.GENERATE_PASS_FINISHED:
       setState({
         message: 'Access Pass successfully generated'
       })
       break;
-    case messageType.PASS_WAITING:
+    case messageTypes.PASS_WAITING:
       setState({
         message: 'Waiting for the deliver to open the door'
       })
       break;
-    case messageType.PASS_FINISHED:
+    case messageTypes.PASS_FINISHED:
       setState({
         message: 'Successful entering the room'
       })
       break;
-    case messageType.CONFIRM_FINISHED:
+    case messageTypes.CONFIRM_FINISHED:
       setState({
         message: 'Door success closed',
         displayImage: false,
