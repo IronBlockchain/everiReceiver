@@ -49,6 +49,11 @@ export const HomeScreenStyles = StyleSheet.create({
     height: 150,
     resizeMode: 'contain',
   },
+  videoStyle: {
+    alignSelf:'stretch',
+    justifyContent:'center',
+    alignItems: 'center',
+  },
   goodContainer: {
     alignSelf: 'stretch',
     flexDirection: 'row'

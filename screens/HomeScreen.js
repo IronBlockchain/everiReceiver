@@ -126,9 +126,7 @@ export default class HomeScreen extends React.Component {
           </View>
         </View>
       )
-    } else if (this.state.mode ==='user'
-      // && this.state.started
-    ){
+    } else if (this.state.mode ==='user' && this.state.started){
     return(
       <View style={_.merge(styles.actionsContainer, {backgroundColor: this.state.backgroundColor})}>
         <TokenProgress/>
@@ -152,19 +150,37 @@ export default class HomeScreen extends React.Component {
   }
 
   generateImage () {
-    if(this.state.displayVideo
-      || true
-    ){
-      return(<Video
-        source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
-        rate={1.0}
-        volume={1.0}
-        isMuted={false}
-        resizeMode="cover"
-        shouldPlay
-        isLooping={false}
-        style={{ width: 300, height: 300 }}
-      />)
+    if(this.state.displayVideo){
+      return(
+        <View style={styles.videoStyle}>
+          <Video
+            source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+            rate={1.0}
+            volume={1.0}
+            onPlaybackStatusUpdate={playbackStatus => {
+              if (playbackStatus.didJustFinish){
+                console.log('just finished!')
+                debugger;
+                this.setState({
+                  displayVideo: false,
+                  displayImage: true,
+                  showAction: true,
+                  actionYesText: 'Confirm Delivery',
+                  actionNoText: 'Report Malice',
+                  actionYes: () => this.ws.send(JSON.stringify({
+                    type: messageTypes.user.CONFIRM,
+                  })),
+                  actionNo: ()=> {}
+                })
+                // The player has just finished playing and will stop.
+              }}}
+            isMuted={true}
+            resizeMode="contain"
+            shouldPlay
+            isLooping={false}
+            style={{ width: 300, height: 200 }}
+          />
+        </View>)
     } else if (this.state.displayImage) {
       return (
         <View style={styles.goodContainer}>

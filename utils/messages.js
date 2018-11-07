@@ -39,7 +39,8 @@ export const messageTypes = {
   PASS_WAITING: 'pass_waiting',
   PASS_FINISHED: 'pass_success',
 
-  CONFIRM_FINISHED: 'confirm_finished',
+  ADD_HASH_START: 'add_hash_start',
+  ADD_HASH_FINISHED: 'confirm_finished',
   TOKEN_DESTROYED: 'token_destroyed',
 }
 
@@ -128,25 +129,36 @@ export const messageRouter = (setState, ws, rawMessage) => {
         showAction: true,
         actionYesText: 'Open the video',
         actionNoText: 'Report malice',
-        actionYes: () => sendMessage({
+        actionYes: () => setState({
           displayVideo: true,
-          displayImage: false,
         }),
-        actionNo: ()=> sendMessage({
+        actionNo: ()=> setState({
           displayVideo: false,
-          displayImage: true,
         })
       })
       break;
-    case messageTypes.CONFIRM_FINISHED:
+    case messageTypes.ADD_HASH_START:
       setState({
-        message: 'Door success closed',
+        message: 'Video data is adding to the blockchain...',
+        deliverMessage: 'Video data is adding to the blockchain...',
         displayImage: false,
         displayVideo: false,
-        showAction: true,
-        actionYesText: 'Issue Token',
-        actionNoText: 'Reject'
+        showAction: false,
       })
       break;
+    case messageTypes.ADD_HASH_FINISHED:
+      setState({
+        message: 'Video data has been recorded on blockchain with Hash' + message.hash,
+        deliverMessage: 'Video data has been recorded on blockchain with Hash' + message.hash,
+        displayImage: false,
+        displayVideo: false,
+        showAction: false,
+      })
+      break;
+    case messageTypes.TOKEN_DESTROYED:
+      setState({
+        message: 'Token successfully destroyed!',
+        deliverMessage: 'Delivery task successfully finished!',
+      })
   }
 }
