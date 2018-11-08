@@ -16,6 +16,7 @@ import {messageRouter} from "../utils/messages";
 import {messageTypes} from "../config";
 import { BarCodeScanner, Permissions, Video} from 'expo';
 import _ from 'lodash'
+import {address, port} from "../config";
 
 export default class HomeScreen extends React.Component {
   constructor (props) {
@@ -52,7 +53,7 @@ export default class HomeScreen extends React.Component {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
 
-    const ws = new WebSocket('ws://192.168.178.22:1337', (result, code) => {
+    const ws = new WebSocket(`ws://${address}:${port}`, (result, code) => {
       console.log(result, code)
     })
     this.ws = ws;

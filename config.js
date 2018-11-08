@@ -32,4 +32,7 @@ export const messageTypes = {
   TOKEN_DESTROYED: 'token_destroyed',
 }
 
+export const address = '192.168.178.22'
+export const port = '1337'
+
 export const listKey = 'receiveList'
